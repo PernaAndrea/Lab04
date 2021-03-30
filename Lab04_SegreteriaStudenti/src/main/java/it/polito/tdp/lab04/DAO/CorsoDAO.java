@@ -12,6 +12,48 @@ import it.polito.tdp.lab04.model.Studente;
 
 public class CorsoDAO {
 	
+	
+	public List<Corso> getCorsi(){
+		
+		final String sql = "SELECT * FROM corso";
+		List<Corso> corsi = new LinkedList<Corso>();
+		
+		try {
+			Connection conn = ConnectDB.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+
+			ResultSet rs = st.executeQuery();
+
+			while (rs.next()) {
+
+				String codins = rs.getString("codins");
+				int numeroCrediti = rs.getInt("crediti");
+				String nome = rs.getString("nome");
+				int periodoDidattico = rs.getInt("pd");
+
+				Corso c = new Corso();
+				c.setCodins(codins);
+				c.setNome(nome);
+				c.setNumeroCrediti(numeroCrediti);
+				c.setPeriodoDidattico(periodoDidattico);
+				corsi.add(c);
+				
+			//	System.out.println(codins + " " + numeroCrediti + " " + nome + " " + periodoDidattico);
+
+				// Crea un nuovo JAVA Bean Corso
+				// Aggiungi il nuovo oggetto Corso alla lista corsi
+			}
+
+			conn.close();
+			
+			return corsi;
+			
+
+		} catch (SQLException e) {
+			// e.printStackTrace();
+			throw new RuntimeException("Errore Db", e);
+		}
+	}
 	/*
 	 * Ottengo tutti i corsi salvati nel Db
 	 */
@@ -34,7 +76,14 @@ public class CorsoDAO {
 				String nome = rs.getString("nome");
 				int periodoDidattico = rs.getInt("pd");
 
-				System.out.println(codins + " " + numeroCrediti + " " + nome + " " + periodoDidattico);
+				Corso c = new Corso();
+				c.setCodins(codins);
+				c.setNome(nome);
+				c.setNumeroCrediti(numeroCrediti);
+				c.setPeriodoDidattico(periodoDidattico);
+				corsi.add(c);
+				
+			//	System.out.println(codins + " " + numeroCrediti + " " + nome + " " + periodoDidattico);
 
 				// Crea un nuovo JAVA Bean Corso
 				// Aggiungi il nuovo oggetto Corso alla lista corsi
@@ -55,15 +104,53 @@ public class CorsoDAO {
 	/*
 	 * Dato un codice insegnamento, ottengo il corso
 	 */
-	public void getCorso(Corso corso) {
+	public Corso getCorso(Corso corso) {
 		// TODO
-	}
+		final String sql = "SELECT * FROM corso";
+
+		Corso c = new Corso();
+
+		try {
+			Connection conn = ConnectDB.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+
+			ResultSet rs = st.executeQuery();
+
+			while (rs.next()) {
+
+				
+				String codins = rs.getString("codins");
+				int numeroCrediti = rs.getInt("crediti");
+				String nome = rs.getString("nome");
+				int periodoDidattico = rs.getInt("pd");
+				
+			c.setCodins(codins);
+			c.setNome(nome);
+			c.setNumeroCrediti(numeroCrediti);
+			c.setPeriodoDidattico(periodoDidattico);
+			
+			//	System.out.println(codins + " " + numeroCrediti + " " + nome + " " + periodoDidattico);
+
+				// Crea un nuovo JAVA Bean Corso
+				// Aggiungi il nuovo oggetto Corso alla lista corsi
+			}
+
+			conn.close();
+			
+			return c;
+			
+
+		} catch (SQLException e) {
+			// e.printStackTrace();
+			throw new RuntimeException("Errore Db", e);
+		}	}
 
 	/*
 	 * Ottengo tutti gli studenti iscritti al Corso
 	 */
-	public void getStudentiIscrittiAlCorso(Corso corso) {
+	public Studente getStudentiIscrittiAlCorso(Corso corso) {
 		// TODO
+		return null;
 	}
 
 	/*
