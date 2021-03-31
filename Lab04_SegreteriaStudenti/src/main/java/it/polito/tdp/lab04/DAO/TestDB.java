@@ -1,6 +1,5 @@
 package it.polito.tdp.lab04.DAO;
 
-import it.polito.tdp.lab04.model.Corso;
 
 public class TestDB {
 
@@ -14,9 +13,9 @@ public class TestDB {
 		cdao.getTuttiICorsi();
 		
 	//	cdao.getCorso();
-		for(Corso i : cdao.getTuttiICorsi()) {
+	/*	for(Corso i : cdao.getTuttiICorsi()) {
 			System.out.println(i.getCodins()+i.getNome());
-		}
+		}*/
 		
 	}
 

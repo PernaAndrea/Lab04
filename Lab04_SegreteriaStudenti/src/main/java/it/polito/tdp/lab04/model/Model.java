@@ -19,6 +19,7 @@ public class Model {
 		corsoDAO = new CorsoDAO();
 		studenteDAO = new StudenteDAO();
 	}
+	
 	public List<Corso> getTuttiICorsi(){
 		return corsoDAO.getTuttiICorsi();
 	}
@@ -30,5 +31,8 @@ public class Model {
 	}
 	public boolean inscriviStudenteACorso(Studente studente, Corso corso) {
 		return corsoDAO.inscriviStudenteACorso(studente, corso);
+	}
+	public Studente getDatiStudente(String matr) {
+		return studenteDAO.getDatiStudente(matr);
 	}
 }

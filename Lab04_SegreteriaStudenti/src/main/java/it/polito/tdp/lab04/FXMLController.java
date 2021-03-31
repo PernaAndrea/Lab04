@@ -32,11 +32,8 @@ public class FXMLController {
     
     public void setModel(Model model) {
     	this.model=model;
-
-    	ArrayList<Corso> c = new ArrayList<Corso>();
-    	c = (ArrayList<Corso>) model.getTuttiICorsi();
-    	for(Corso cc: c) {
-    		ComboBox.getItems().add(cc.getNome());
+    	for(Corso cc: model.getTuttiICorsi()) {
+    		ComboBox.getItems().add(cc.toString());
     	}
     	ComboBox.getItems().add("");
     }
@@ -56,6 +53,25 @@ public class FXMLController {
     @FXML
     void buttonStudent(ActionEvent event) {
 
+    	txtNome.setText("");
+		txtCognome.setText("");
+    	Studente a = new Studente();
+    	
+    	if(txtMatricola.getText()!=null && txtMatricola.getText().length()==6) {
+    		
+    		 a = model.getDatiStudente(txtMatricola.getText());
+    		 if(a!=null) {
+    		 
+    		 txtNome.setText(a.getNome());
+    		 txtCognome.setText(a.getCognome());
+    		 txtResult.setText("");
+    		 
+    		 }else {
+    			 txtResult.setText("Matricola non esistente");
+    		 }
+    	}else {
+    		txtResult.setText("Errore nell'inserimento della matricola");
+    	}
     }
 
     @FXML
