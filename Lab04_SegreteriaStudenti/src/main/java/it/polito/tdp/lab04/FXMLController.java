@@ -35,7 +35,7 @@ public class FXMLController {
     	for(Corso cc: model.getTuttiICorsi()) {
     		ComboBox.getItems().add(cc.toString());
     	}
-    	ComboBox.getItems().add("");
+    	ComboBox.getItems().add(" ");
     }
 
     @FXML
@@ -82,6 +82,14 @@ public class FXMLController {
     @FXML
     void doCercaIscritti(ActionEvent event) {
 
+    	txtResult.clear();
+    	if(ComboBox.getValue().compareTo(" ")!=0) {
+    	ArrayList<Studente> iscrittiAlCorso = new ArrayList<Studente>(model.getStudentiIscrittiCorso(ComboBox.getValue()));
+    	
+    	for(Studente s:iscrittiAlCorso) {
+    		txtResult.appendText(s.toString());
+    		}
+    	}
     }
 
     @FXML
@@ -92,6 +100,10 @@ public class FXMLController {
     @FXML
     void doReset(ActionEvent event) {
 
+    	txtMatricola.clear();
+    	txtNome.clear();
+    	txtCognome.clear();
+    	txtResult.clear();
     }
 
     @FXML

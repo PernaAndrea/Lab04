@@ -23,12 +23,10 @@ public class Model {
 	public List<Corso> getTuttiICorsi(){
 		return corsoDAO.getTuttiICorsi();
 	}
-	public Corso getCorso(Corso corso) {
-		return corsoDAO.getCorso(corso);
+	public List<Studente> getStudentiIscrittiCorso(String cod) {
+		return corsoDAO.getStudentiIscrittiCorso(cod);
 	}
-	public Studente getStudentiIscrittiAlCorso(Corso corso) {
-		return corsoDAO.getStudentiIscrittiAlCorso(corso);
-	}
+	
 	public boolean inscriviStudenteACorso(Studente studente, Corso corso) {
 		return corsoDAO.inscriviStudenteACorso(studente, corso);
 	}

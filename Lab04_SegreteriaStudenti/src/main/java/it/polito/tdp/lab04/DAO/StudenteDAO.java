@@ -4,10 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
-import it.polito.tdp.lab04.model.Corso;
 import it.polito.tdp.lab04.model.Studente;
 
 public class StudenteDAO {
@@ -32,7 +30,7 @@ public class StudenteDAO {
 
 			try {
 				s = new Studente();
-				int matricola = rs.getInt("matricola");
+				String matricola = rs.getString("matricola");
 				String nome = rs.getString("nome");
 				String cognome = rs.getString("cognome");
 				String cds = rs.getString("CDS");

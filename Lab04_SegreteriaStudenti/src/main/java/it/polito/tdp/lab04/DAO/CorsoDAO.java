@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -63,30 +64,30 @@ public class CorsoDAO {
 	/*
 	 * Dato un codice insegnamento, ottengo il corso
 	 */
-	public Corso getCorso(Corso corso) {
+	public List<Studente> getStudentiIscrittiCorso(String cod) {
 		// TODO
-		final String sql = "SELECT * FROM corso";
+		final String sql = "SELECT i.matricola, s.cognome, s.nome, s.CDS FROM iscrizione AS i,corso AS c,studente AS s WHERE i.codins=c.codins AND c.codins=? AND s.matricola=i.matricola ORDER BY i.matricola ASC ";
 
-		Corso c = new Corso();
+		ArrayList<Studente> s = null;
 
 		try {
 			Connection conn = ConnectDB.getConnection();
 			PreparedStatement st = conn.prepareStatement(sql);
-
+			st.setString(1, cod);
 			ResultSet rs = st.executeQuery();
 
 			while (rs.next()) {
 
+				s = new ArrayList<Studente>();
 				
-				String codins = rs.getString("codins");
-				int numeroCrediti = rs.getInt("crediti");
+				String matricola = rs.getString("matricola");
+				String cognome = rs.getString("cognome");
 				String nome = rs.getString("nome");
-				int periodoDidattico = rs.getInt("pd");
+				String cds = rs.getString("CDS");
 				
-			c.setCodins(codins);
-			c.setNome(nome);
-			c.setNumeroCrediti(numeroCrediti);
-			c.setPeriodoDidattico(periodoDidattico);
+				Studente ss = new Studente(matricola,cognome,nome,cds);
+				s.add(ss);
+				
 			
 			//	System.out.println(codins + " " + numeroCrediti + " " + nome + " " + periodoDidattico);
 
@@ -96,7 +97,7 @@ public class CorsoDAO {
 
 			conn.close();
 			
-			return c;
+			return s;
 			
 
 		} catch (SQLException e) {
