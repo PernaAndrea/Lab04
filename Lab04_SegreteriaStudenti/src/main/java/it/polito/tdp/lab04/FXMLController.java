@@ -64,7 +64,7 @@ public class FXMLController {
     		 
     		 txtNome.setText(a.getNome());
     		 txtCognome.setText(a.getCognome());
-    		 txtResult.setText("");
+    		// txtResult.setText("");
     		 
     		 }else {
     			 txtResult.setText("Matricola non esistente");
@@ -76,20 +76,66 @@ public class FXMLController {
 
     @FXML
     void doCercaCorsi(ActionEvent event) {
-
+    	
+    	txtResult.clear();
+    	txtResult.setStyle("-fx-font-family: monospace");
+    	if(txtMatricola.getText()!=null && (ComboBox.getValue()==null || ComboBox.getValue()==" ")) {
+    	ArrayList<Corso> c = new ArrayList<Corso>(model.getTuttiICorsi());
+    	if(txtMatricola.getText()!=null) {
+    		c = (ArrayList<Corso>) model.CorsiStudente(txtMatricola.getText());
+    		StringBuilder sb = new StringBuilder();
+        	for(Corso cc : c) {
+        		sb.append(String.format("%-8s ",cc.getCodins()));//il percentuale lo fa sostituire
+        		sb.append(String.format("%-4d ",cc.getNumeroCrediti()));// il meno lo allinea a sx
+        		sb.append(String.format("%-50s ",cc.getNome()));//il numero indica quanto larga fare la colonna
+        		sb.append(String.format("%-4d \n",cc.getPeriodoDidattico())); //la lettera 'd' e 's' stanno a significare il tipo String o int
+        	}
+        	txtResult.appendText(sb.toString());
+    	}else {
+    		txtResult.setText("Errore nell' inserimento della matricola");
+    		}
+    	}else {
+    		ArrayList<Corso> c = new ArrayList<Corso>(model.getTuttiICorsi());
+    		for(Corso cc:c) {
+    			if(cc.getNome().equals(ComboBox.getValue())) {
+    					if(model.studenteIscritto(txtMatricola.getText(),cc.getCodins())) {
+    							txtResult.setText("Studente già iscritto per il corso selezionato ");
+    				}else {
+    					txtResult.setText("Studente non iscritto per il corso selezionato ");
+    				}
+    			}
+    		}
+    	}
     }
 
     @FXML
     void doCercaIscritti(ActionEvent event) {
 
+    	txtResult.setStyle("-fx-font-family: monospace");
+    	
+    	ArrayList<Corso> c = new ArrayList<Corso>(model.getTuttiICorsi());
+    	ArrayList<Studente> iscrittiAlCorso  = new ArrayList<Studente>();
     	txtResult.clear();
     	if(ComboBox.getValue().compareTo(" ")!=0) {
-    	ArrayList<Studente> iscrittiAlCorso = new ArrayList<Studente>(model.getStudentiIscrittiCorso(ComboBox.getValue()));
-    	
-    	for(Studente s:iscrittiAlCorso) {
-    		txtResult.appendText(s.toString());
+    		for(Corso cc:c) {
+    			if(cc.getNome().equals(ComboBox.getValue())) {
+    				iscrittiAlCorso = (ArrayList<Studente>) model.getStudentiIscrittiCorso(cc.getCodins());
+    			}
     		}
+    		//setto correttamente il valore della text area
+        	StringBuilder sb = new StringBuilder();
+        	for(Studente ccc : iscrittiAlCorso) {
+        		sb.append(String.format("%-6s ",ccc.getMatricola()));//il percentuale lo fa sostituire
+        		sb.append(String.format("%-10s ",ccc.getCognome()));// il meno lo allinea a sx
+        		sb.append(String.format("%-10s ",ccc.getNome()));//il numero indica quanto larga fare la colonna
+        		sb.append(String.format("%-6s \n",ccc.getCds())); //la lettera 'd' e 's' stanno a significare il tipo String o int
+        	}
+        	txtResult.appendText(sb.toString());
+  
+    	}else {
+    		txtResult.setText("Nessun corso selezionato");
     	}
+    	
     }
 
     @FXML

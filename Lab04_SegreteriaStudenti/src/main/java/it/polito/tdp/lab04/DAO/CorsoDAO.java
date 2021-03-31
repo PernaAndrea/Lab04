@@ -68,7 +68,7 @@ public class CorsoDAO {
 		// TODO
 		final String sql = "SELECT i.matricola, s.cognome, s.nome, s.CDS FROM iscrizione AS i,corso AS c,studente AS s WHERE i.codins=c.codins AND c.codins=? AND s.matricola=i.matricola ORDER BY i.matricola ASC ";
 
-		ArrayList<Studente> s = null;
+		ArrayList<Studente> s = new ArrayList<Studente>();
 
 		try {
 			Connection conn = ConnectDB.getConnection();
@@ -78,7 +78,6 @@ public class CorsoDAO {
 
 			while (rs.next()) {
 
-				s = new ArrayList<Studente>();
 				
 				String matricola = rs.getString("matricola");
 				String cognome = rs.getString("cognome");
@@ -106,13 +105,89 @@ public class CorsoDAO {
 		}	}
 
 	/*
-	 * Ottengo tutti gli studenti iscritti al Corso
+	 * Ottengo tutti i Corsi a cui lo studente è  iscritto
 	 */
-	public Studente getStudentiIscrittiAlCorso(Corso corso) {
-		// TODO
-		return null;
+	public List<Corso> CorsiStudente(String matr){
+		
+		final String sql = "SELECT c.codins, c.crediti, c.nome, c.pd "
+				+ "FROM iscrizione i,studente s,corso c "
+				+ "WHERE s.matricola = i.matricola "
+				+ "AND i.codins = c.codins AND i.matricola = ? ";
+
+		List<Corso> corsi = new ArrayList<Corso>();
+
+		try {
+			Connection conn = ConnectDB.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setString(1, matr);
+			ResultSet rs = st.executeQuery();
+
+			while (rs.next()) {
+
+				String codins = rs.getString("codins");
+				int numeroCrediti = rs.getInt("crediti");
+				String nome = rs.getString("nome");
+				int periodoDidattico = rs.getInt("pd");
+
+				Corso c = new Corso();
+				c.setCodins(codins);
+				c.setNome(nome);
+				c.setNumeroCrediti(numeroCrediti);
+				c.setPeriodoDidattico(periodoDidattico);
+				corsi.add(c);
+				
+			//	System.out.println(codins + " " + numeroCrediti + " " + nome + " " + periodoDidattico);
+
+				// Crea un nuovo JAVA Bean Corso
+				// Aggiungi il nuovo oggetto Corso alla lista corsi
+			}
+
+			conn.close();
+			
+			return corsi;
+			
+
+		} catch (SQLException e) {
+			// e.printStackTrace();
+			throw new RuntimeException("Errore Db", e);
+		}
 	}
 
+	public boolean studenteIscritto(String matr,String codinss) {
+		
+		final String sql = "SELECT i.codins, i.matricola "
+				+ "FROM iscrizione i,studente s,corso c "
+				+ "WHERE s.matricola = i.matricola AND i.codins = ?"
+				+ "AND i.codins = c.codins AND i.matricola = ? ";
+
+		try {
+			Connection conn = ConnectDB.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setString(1, codinss);
+			st.setString(2, matr);
+			ResultSet rs = st.executeQuery();
+
+			while (rs.next()) {
+
+				conn.close();
+				return true;
+				
+			//	System.out.println(codins + " " + numeroCrediti + " " + nome + " " + periodoDidattico);
+
+				// Crea un nuovo JAVA Bean Corso
+				// Aggiungi il nuovo oggetto Corso alla lista corsi
+			}
+
+			conn.close();
+			
+			return false;
+			
+
+		} catch (SQLException e) {
+			// e.printStackTrace();
+			throw new RuntimeException("Errore Db", e);
+		}
+	}
 	/*
 	 * Data una matricola ed il codice insegnamento, iscrivi lo studente al corso.
 	 */

@@ -33,4 +33,10 @@ public class Model {
 	public Studente getDatiStudente(String matr) {
 		return studenteDAO.getDatiStudente(matr);
 	}
+	public List<Corso> CorsiStudente(String matr){
+		return corsoDAO.CorsiStudente(matr);
+	}
+	public boolean studenteIscritto(String matr,String codinss) {
+		return corsoDAO.studenteIscritto(matr, codinss);
+	}
 }
