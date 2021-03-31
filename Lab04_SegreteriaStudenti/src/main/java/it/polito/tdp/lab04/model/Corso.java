@@ -53,7 +53,7 @@ public class Corso {
 
 	@Override
 	public String toString() {
-		return  nome ;
+		return  nome  ;
 	}
 
 	@Override

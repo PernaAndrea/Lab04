@@ -79,7 +79,7 @@ public class FXMLController {
     	
     	txtResult.clear();
     	txtResult.setStyle("-fx-font-family: monospace");
-    	if(txtMatricola.getText()!=null && (ComboBox.getValue()==null || ComboBox.getValue()==" ")) {
+    	if(txtMatricola.getText()!=null && (ComboBox.getValue()==null || ComboBox.getValue().equals(" "))) {
     	ArrayList<Corso> c = new ArrayList<Corso>(model.getTuttiICorsi());
     	if(txtMatricola.getText()!=null) {
     		c = (ArrayList<Corso>) model.CorsiStudente(txtMatricola.getText());
@@ -99,9 +99,9 @@ public class FXMLController {
     		for(Corso cc:c) {
     			if(cc.getNome().equals(ComboBox.getValue())) {
     					if(model.studenteIscritto(txtMatricola.getText(),cc.getCodins())) {
-    							txtResult.setText("Studente già iscritto per il corso selezionato ");
+    							txtResult.setText("Studente già iscritto per il corso selezionato");
     				}else {
-    					txtResult.setText("Studente non iscritto per il corso selezionato ");
+    					txtResult.setText("Studente non iscritto per il corso selezionato");
     				}
     			}
     		}

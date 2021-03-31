@@ -44,7 +44,7 @@ public class Studente {
 
 	@Override
 	public String toString() {
-		return "Studente matricola=" + matricola + ", cognome=" + cognome + ", nome=" + nome + ", cds=" + cds ;
+		return "Studente matricola= " + matricola + ", cognome= " + cognome + ", nome= " + nome + ", cds= " + cds ;
 	}
 	@Override
 	public int hashCode() {

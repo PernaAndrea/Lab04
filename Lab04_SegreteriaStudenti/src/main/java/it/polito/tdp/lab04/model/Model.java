@@ -36,7 +36,7 @@ public class Model {
 	public List<Corso> CorsiStudente(String matr){
 		return corsoDAO.CorsiStudente(matr);
 	}
-	public boolean studenteIscritto(String matr,String codinss) {
-		return corsoDAO.studenteIscritto(matr, codinss);
+	public boolean studenteIscritto(String matri,String codinss) {
+		return corsoDAO.studenteIscritto(matri, codinss);
 	}
 }

@@ -153,7 +153,7 @@ public class CorsoDAO {
 		}
 	}
 
-	public boolean studenteIscritto(String matr,String codinss) {
+	public boolean studenteIscritto(String matri,String codinss) {
 		
 		final String sql = "SELECT i.codins, i.matricola "
 				+ "FROM iscrizione i,studente s,corso c "
@@ -164,7 +164,7 @@ public class CorsoDAO {
 			Connection conn = ConnectDB.getConnection();
 			PreparedStatement st = conn.prepareStatement(sql);
 			st.setString(1, codinss);
-			st.setString(2, matr);
+			st.setString(2, matri);
 			ResultSet rs = st.executeQuery();
 
 			while (rs.next()) {
