@@ -141,6 +141,24 @@ public class FXMLController {
     @FXML
     void doIscrivi(ActionEvent event) {
 
+    	txtResult.setStyle("-fx-font-family: monospace");
+    	Studente s=null;
+    	ArrayList<Corso> c = new ArrayList<Corso>(model.getTuttiICorsi());
+    	if(ComboBox.getValue().compareTo(" ")!=0 && txtMatricola.getText()!=null && txtMatricola.getText().length()==6) {
+    		for(Corso cc:c) {
+    			if(cc.getNome().equals(ComboBox.getValue())) {
+    				 s = new Studente();
+    				 s = model.getDatiStudente(txtMatricola.getText());
+    				 if(s!=null)
+    					 if(model.inscriviStudenteACorso(s.getMatricola(), cc.getCodins())) {
+    						 txtResult.setText("Studente iscritto correttamente al corso selezionato");
+    					 }else {
+    						 txtResult.setText("Studente già iscritto al corso selezionato");
+    					 }
+    				 
+    					}
+    				}
+    			}
     }
 
     @FXML

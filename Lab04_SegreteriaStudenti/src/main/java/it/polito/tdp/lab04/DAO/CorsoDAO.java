@@ -153,18 +153,18 @@ public class CorsoDAO {
 		}
 	}
 
-	public boolean studenteIscritto(String matri,String codinss) {
+	public boolean studenteIscritto(String matr,String codinss) {
 		
 		final String sql = "SELECT i.codins, i.matricola "
 				+ "FROM iscrizione i,studente s,corso c "
-				+ "WHERE s.matricola = i.matricola AND i.codins = ?"
+				+ "WHERE s.matricola = i.matricola AND i.codins = ? "
 				+ "AND i.codins = c.codins AND i.matricola = ? ";
 
 		try {
 			Connection conn = ConnectDB.getConnection();
 			PreparedStatement st = conn.prepareStatement(sql);
 			st.setString(1, codinss);
-			st.setString(2, matri);
+			st.setString(2, matr);
 			ResultSet rs = st.executeQuery();
 
 			while (rs.next()) {
@@ -191,10 +191,6 @@ public class CorsoDAO {
 	/*
 	 * Data una matricola ed il codice insegnamento, iscrivi lo studente al corso.
 	 */
-	public boolean inscriviStudenteACorso(Studente studente, Corso corso) {
-		// TODO
-		// ritorna true se l'iscrizione e' avvenuta con successo
-		return false;
-	}
+
 
 }

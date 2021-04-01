@@ -27,8 +27,8 @@ public class Model {
 		return corsoDAO.getStudentiIscrittiCorso(cod);
 	}
 	
-	public boolean inscriviStudenteACorso(Studente studente, Corso corso) {
-		return corsoDAO.inscriviStudenteACorso(studente, corso);
+	public boolean inscriviStudenteACorso(String studente, String cod) {
+		return StudenteDAO.inscriviStudenteACorso(studente, cod);
 	}
 	public Studente getDatiStudente(String matr) {
 		return studenteDAO.getDatiStudente(matr);
